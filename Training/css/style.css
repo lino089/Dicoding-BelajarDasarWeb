@@ -60,7 +60,6 @@ nav a:hover{
     border-radius: 10px;
 
     padding: 20px;
-    margin-top: 20px;
 }
 
 .jumbotron {
@@ -72,7 +71,6 @@ nav a:hover{
 }
 
 nav li {
-    display: inline;
     list-style-type: none;
     margin-right: 20px;
 }
@@ -80,22 +78,52 @@ nav li {
 nav{
     background-color: #00a2c6;
     padding: 5px;
+
+    position: sticky;
+    top: 0;
 }
 
 main {
     padding: 20px;
 
-    overflow: auto;
+    display: flex;
+    gap: 1.5rem;
 }
 
 #content {
-    float: left;
-    width: 75%;
+    flex: 5;
 }
 
 aside{
-    float: right;
-    width: 25%;
+    flex: 1;
+}
 
-    padding-left: 20px;
+@media screen and (max-width: 1200px) {
+    main{
+        flex-flow: column nowrap;
+    }
+
+    main aside {
+        align-self: center;
+    }
+    }
+
+@media screen and (max-width: 768px) {
+    nav ul {
+        justify-content: center;
+    }
+    main aside{
+        align-self: stretch;
+    }
+}
+
+header{
+    display: inline;
+}
+
+nav ul {
+    padding-inline: 4rem;
+    display: flex;
+
+    gap: 2rem;
 }
