@@ -170,3 +170,35 @@ main aside .social-media li a{
 main aside .social-media li a:hover{
     color: #89b0d9;
 }
+
+@media screen and (max-width: 768px){
+    .navbar-container {
+        flex-direction: column;
+    }
+
+    .navbar-container .nav-list ul {
+        flex-wrap: wrap;
+        column-gap: 0.5rem;
+    }
+
+    main {
+        padding: 1rem 3rem;
+    }
+
+    .content {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .content .content-description .title{
+        font-size: 3rem;
+    }
+
+    .content .content-description p{
+        font-size: 1rem;
+    }
+
+    .content .content-image{
+        order: -1;
+    }
+}
