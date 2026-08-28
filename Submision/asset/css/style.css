@@ -341,3 +341,22 @@ aside {
 .footer-brand img {
     width: 150px;
 }
+
+.project-link, .hero span {
+    font-weight: bold;
+}
+
+.btn-resume {
+    border: 1px solid black;
+    width: 100%;
+    padding: 10px;
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+    border-radius: 10px;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.btn-resume:hover{
+    background-color: rgb(239, 237, 237);
+}
