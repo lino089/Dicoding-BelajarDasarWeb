@@ -15,21 +15,26 @@ body {
 
 header {
     width: 100%;    
-    /* padding-block: 1rem;
-    padding-inline: 2rem; */
+    background-color: white;
+    border-bottom: 1px solid #e2e8f0;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
 
-
+.nav-container {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 0.75rem 2rem;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    border-bottom: solid teal;
-
-    z-index: 9999;
-
 }
 
 header .logo img{
-    width: 100px;
+    width: auto;
+    height: 100px;
+    display: block;
 }
 
 header .nav-list li {
@@ -37,41 +42,51 @@ header .nav-list li {
 }
 
 header .nav-list ul{
-    padding-left: 0;
-
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: flex;
-    justify-content: center;
-    gap: 2rem 1rem;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 header .nav-list li a{
+    display: inline-block;
     padding: 0.5rem 1.5rem;
     border-radius: 100px;
 
     text-decoration: none;
-    font-size: 1.05rem;
-    font-weight: 500;
-    color: black;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: #4a5568;
 
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease;
 }
 
-header .nav-list li a:hover{
-    background-color: #425c77;
-    color: white;
+header .nav-list li a:hover,
+header .nav-list li a:active{
+    background-color: #caf5eb;
+    color: #00a2c6;
 }
 
 .btn-contact {
+    display: inline-block;
     text-decoration: none;
     color: white;
-
-    padding: 10px 20px 10px 20px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 0.6rem 1.4rem;
     background-color: #425c77;
     border-radius: 100px;
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
 .btn-contact:hover {
-    background-color: #374c62;
+    background-color: #33475b;
+}
+
+.btn-contact:active {
+    transform: scale(0.98);
 }
 
 main {
@@ -83,7 +98,8 @@ main {
     padding: 2rem 4rem;
 
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    gap: 2rem;
 }
 
 .hero, .project-class, .profile-card, .skills-card, .contact-card {
@@ -93,55 +109,189 @@ main {
     padding: 20px;
 }
 
+.project-class{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 .content {
-    gap: 5px;
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
 
 .project-list {
     display: flex;
+    gap: 1.5rem;
+}
+
+.profile-card{
+    text-align: center;
 }
 
 .profile-card img{
     width: 150px;
     height: auto;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 1rem;
 }
 
 .input {
-    padding: 15px;
+    padding: 12px 16px;
     width: 100%;
-    margin-bottom: 10px;
-    border-radius: 50px;
+    margin-bottom: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    outline: none;
+    font-family: inherit;
+}
+
+.input:focus{
     border-color: teal;
 }
 
 .btn-send {
-    margin-top: 10px;
-    border-radius: 80px;
-    padding: 15px;
+    width: 100%;
+    background-color: #425c77;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+.btn-send:hover{
+    background-color: #374c62;
 }
 
 footer {
-    padding: 20px;
+    width: 100%;
     color: white;
     background-color: #00a2c6;
-    justify-content: space-between;
-    font-weight: bold;
-
-    flex: 1;
-    display: flex;
+    padding: 2rem;
+    margin-top: auto;
 }
 
-.footer-links li {
-    list-style-type: none;
+.footer-container {
+    max-width: 1200px;
+    margin-inline: auto;
+    padding-inline: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+.footer-brand{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.footer-brand h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+.footer-brand p{
+    margin: 0;
+    font-size: 0.85rem;
+    opacity: 0.9;
 }
 
 .footer-links li a{
     text-decoration: none;
     color: white;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: opacity 0.2s ease, transform 0.2 ease;
+    display: inline-block;
+}
+
+.footer-links li a:hover{
+    opacity: 0.75;
+    text-decoration: underline;
 }
 
 .footer-links {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;    
+}
+
+aside {
     flex: 1;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+}
+
+.tech-tags span{
+    background-color: #e0f2f1;
+    color: teal;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+
+@media (max-width: 768px){
+    main{
+        flex-direction: column;
+        padding: 1.5rem 1rem;
+    }
+
+    .project-list{
+        flex-direction: column;
+    }
+
+    .footer-container{
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+
+    .footer-links{
+        justify-content: center;
+    }
+}
+
+.contact-form{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.contact-form .input{
+    margin-bottom: 0;
+    flex: 1;
+}
+
+.contact-form .btn-send{
+    margin-top: 0;
+    white-space: nowrap;
+    width: auto;
+}
+
+.footer-brand img {
+    width: 150px;
 }
