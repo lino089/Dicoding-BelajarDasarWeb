@@ -40,7 +40,7 @@ class Animal {
 
 class Rabbit extends Animal{
     eat(){
-        console.log(`${this.name} sedang makan!`);
+        return `${this.name} sedang makan!`;
     }
 
     isMammal = true;
@@ -48,7 +48,7 @@ class Rabbit extends Animal{
 
 class Eagle extends Animal{
     fly() {
-        console.log(`${this.name} sedang terbang!`);
+        return `${this.name} sedang terbang!`;
     }
 
     isMammal = false;
