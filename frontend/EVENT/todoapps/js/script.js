@@ -43,10 +43,15 @@ document.addEventListener(RENDER_EVENT, function () {
     const uncompletedTODOList = document.getElementById('todos');
     uncompletedTODOList.innerHTML = '';
 
+    const completedTODOList = document.getElementById('completed-todos');
+    completedTODOList.innerHTML = '';
+
     for (const todoItem of todos) {
         const todoElement = makeTodo(todoItem);
         if(!todoItem.isComplete) {
             uncompletedTODOList.append(todoElement);
+        } else {
+            completedTODOList.append(todoElement);
         }
     }
 });
@@ -79,7 +84,7 @@ function makeTodo(todoObject) {
         trashButton.classList.add('trash-button');
 
         trashButton.addEventListener('click', () => {
-            removeTaskFromCompleted(todoObject.id);
+            removeTaskFromComplete(todoObject.id);
         });
 
         container.append(undoButton, trashButton);
@@ -98,6 +103,15 @@ function makeTodo(todoObject) {
     return container;
 }
 
+function addTaskToComplete(todoId){
+    const todoTarget = findTodo(todoId);
+
+    if (todoTarget == null) return;
+
+    todoTarget.isComplete = true;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
 function findTodo(todoId) {
     for (const todoItem of todos){
         if(todoItem.id === todoId){
@@ -106,4 +120,33 @@ function findTodo(todoId) {
     }
 
     return null;
+}
+
+function removeTaskFromComplete(todo_id){
+    const todoTarget = findTodoIndex(todo_id);
+
+    if(todoTarget === -1) return;
+
+    todos.splice(todoTarget, 1);
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+
+function undoTaskFromComplete(todo_id){
+    const todoTarget = findTodo(todo_id);
+
+    if (todoTarget == null) return;
+
+    todoTarget.isComplete = false;
+    document.dispatchEvent(new Event(RENDER_EVENT));
+}
+
+function findTodoIndex(todoId) {
+    for(const index in todos){
+        if(todos[index].id === todoId){
+            return index;
+        }
+    }
+
+    return -1;
 }
