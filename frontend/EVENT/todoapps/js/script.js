@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
     addTodo();
   });
 
-  if (isStorageExist(0)) {
+  if (isStorageExist()) {
     loadDataFromStorage();
   }
 });
@@ -28,6 +28,7 @@ function addTodo() {
 
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
+  alert(`Todo "${textTodo}" berhasil ditambahkan!`);
 }
 
 function generateId() {
@@ -132,9 +133,11 @@ function removeTaskFromComplete(todo_id) {
 
   if (todoTarget === -1) return;
 
+  const deletedTodo = todos[todoTarget];
   todos.splice(todoTarget, 1);
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
+  alert(`Todo "${deletedTodo.task}" berhasil dihapus!`);
 }
 
 function undoTaskFromComplete(todo_id) {
@@ -145,6 +148,7 @@ function undoTaskFromComplete(todo_id) {
   todoTarget.isComplete = false;
   document.dispatchEvent(new Event(RENDER_EVENT));
   saveData();
+  alert(`Todo "${todoTarget.task}" dipindahkan kembali ke belum selesai!`);
 }
 
 function findTodoIndex(todoId) {
@@ -158,7 +162,7 @@ function findTodoIndex(todoId) {
 }
 
 function saveData() {
-  if (isStorageExist) {
+  if (isStorageExist()) {
     const parsed = JSON.stringify(todos);
     localStorage.setItem(STORAGE_KEY, parsed);
     document.dispatchEvent(new Event(SAVED_EVENT));
@@ -169,7 +173,7 @@ const SAVED_EVENT = "saved-todo";
 const STORAGE_KEY = "TODO_APPS";
 
 function isStorageExist() {
-  if (typeof Storage === undefined) {
+  if (typeof (Storage) === "undefined") {
     alert("Browser Kamu tidak mendukung local storage");
     return false;
   }
