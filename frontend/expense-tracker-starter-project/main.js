@@ -40,50 +40,68 @@ function render() {
     title.setAttribute("data-testid", "transactionItemTitle");
     title.innerText = transaction.title;
 
-    amount = document.createElement("p");
+    const amount = document.createElement("p");
     amount.classList.add("tracker-transaction-item__amount");
     amount.setAttribute("data-testid", "transactionItemAmount");
     amount.innerText = `Rp ${Number(transaction.amount).toLocaleString("id-ID")}`;
 
-    date = document.createElement("p");
+    const date = document.createElement("p");
     date.classList.add("tracker-transaction-item__date");
     date.setAttribute("data-testid", "transactionItemDate");
     date.innerText = transaction.date;
 
     card.append(title, amount, date);
-    
+
     if (transaction.type === "income") {
-        incomeList.append(card);
+      incomeList.append(card);
     } else {
-        expenseList.append(card);
+      expenseList.append(card);
     }
+
+    updateDashboard();
   }
 }
 
 // TODO [Basic] Tambahkan event listener 'submit' pada form, panggil e.preventDefault() di dalamnya
 // TODO [Basic] Di dalam handler submit, ambil nilai input lalu tambahkan sebagai objek transaksi baru ke array
-const form = document.getElementById('transactionForm');
-form.addEventListener('submit', (e) => {
-    
+const form = document.getElementById("transactionForm");
+form.addEventListener("submit", (e) => {
+  e.preventDefault();
 
-    const transactionFormTitleInput = document.getElementById('transactionFormTitleInput').value;
-    const transactionFormAmountInput = Number(document.getElementById('transactionFormAmountInput').value);
-    const transactionFormDateInput = document.getElementById('transactionFormDateInput').value;
-    const transactionFormTypeSelect = document.getElementById('transactionFormTypeSelect').value;
+  const transactionFormTitleInput = document.getElementById(
+    "transactionFormTitleInput",
+  ).value;
+  const transactionFormAmountInput = Number(
+    document.getElementById("transactionFormAmountInput").value,
+  );
+  const transactionFormDateInput = document.getElementById(
+    "transactionFormDateInput",
+  ).value;
+  const transactionFormTypeSelect = document.getElementById(
+    "transactionFormTypeSelect",
+  ).value;
 
-    transactions.push({
-        id: generateId(),
-        title: transactionFormTitleInput,
-        amount: Number(transactionFormAmountInput),
-        date: transactionFormDateInput,
-        type: transactionFormTypeSelect
-    });
+  if (transactionFormTitleInput === "") {
+    alert("Masukan Judul");
+    return;
+  } else if (transactionFormAmountInput < 1) {
+    alert("Minimal nominal transaksi adalah 1");
+    return;
+  }
+  transactions.push({
+    id: generateId(),
+    title: transactionFormTitleInput,
+    amount: Number(transactionFormAmountInput),
+    date: transactionFormDateInput,
+    type: transactionFormTypeSelect,
+  });
 
-    render()
+  render();
 
-    e.preventDefault();
+  updateDashboard();
+
+  form.reset();
 });
-
 
 /**
  * TODO [Skilled]:
@@ -98,6 +116,29 @@ form.addEventListener('submit', (e) => {
  *  - Hitung total pemasukan, total pengeluaran, dan saldo (pemasukan - pengeluaran)
  *  - Tampilkan hasilnya ke elemen yang sesuai di HTML
  */
+
+function updateDashboard() {
+  let totalIncome = 0;
+  let totalExpense = 0;
+
+  for(let transaction of transactions) {
+    if (transaction.type === 'income'){
+      totalIncome += Number(transaction.amount);
+    } else if (transaction.type === 'expense'){
+      totalExpense += Number(transaction.amount);
+    }
+  }
+
+  const balance = totalIncome - totalExpense;
+
+  const saldo = document.querySelector('.tracker-summary__balance-amount');
+  const pemasukan = document.querySelector('.tracker-summary__stat-amount--income');
+  const pengeluaran = document.querySelector('.tracker-summary__stat-amount--expense');
+
+  saldo.innerText = `Rp${balance.toLocaleString("id-ID")}`;
+  pemasukan.innerText = `Rp${totalIncome.toLocaleString("id-ID")}`;
+  pengeluaran.innerText = `Rp${totalExpense.toLocaleString("id-ID")}`;
+}
 
 /**
  * ========================================================
