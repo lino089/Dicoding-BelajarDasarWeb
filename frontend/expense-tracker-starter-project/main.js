@@ -7,7 +7,8 @@
 
 // TODO [Basic] Buat variabel array untuk menyimpan semua data transaksi, contoh: let transactions = []
 // TODO [Basic] Buat fungsi untuk menghasilkan ID unik secara otomatis, contoh: gunakan +new Date()
-
+let transactions = [];
+const generateId = () => +new Date();
 
 /**
  * ========================================================
@@ -15,6 +16,8 @@
  * ========================================================
  */
 // TODO [Basic] Ambil elemen kontainer incomeList dan expenseList dari DOM
+const incomeList = document.getElementById("incomeList");
+const expenseList = document.getElementById("expenseList");
 
 /**
  * TODO [Basic]:
@@ -24,9 +27,63 @@
  *  - Pastikan setiap elemen memiliki atribut data-testid yang sesuai (lihat panduan di rubrik)
  *  - Masukkan kartu ke kontainer yang tepat: income → incomeList, expense → expenseList
  */
+function render() {
+  incomeList.innerText = "";
+  expenseList.innerText = "";
+  for (let transaction of transactions) {
+    const card = document.createElement("div");
+    card.classList.add("tracker-transaction-item");
+    card.setAttribute("data-testid", "transactionItem");
+
+    const title = document.createElement("h4");
+    title.classList.add("tracker-transaction-item__title");
+    title.setAttribute("data-testid", "transactionItemTitle");
+    title.innerText = transaction.title;
+
+    amount = document.createElement("p");
+    amount.classList.add("tracker-transaction-item__amount");
+    amount.setAttribute("data-testid", "transactionItemAmount");
+    amount.innerText = `Rp ${Number(transaction.amount).toLocaleString("id-ID")}`;
+
+    date = document.createElement("p");
+    date.classList.add("tracker-transaction-item__date");
+    date.setAttribute("data-testid", "transactionItemDate");
+    date.innerText = transaction.date;
+
+    card.append(title, amount, date);
+    
+    if (transaction.type === "income") {
+        incomeList.append(card);
+    } else {
+        expenseList.append(card);
+    }
+  }
+}
 
 // TODO [Basic] Tambahkan event listener 'submit' pada form, panggil e.preventDefault() di dalamnya
 // TODO [Basic] Di dalam handler submit, ambil nilai input lalu tambahkan sebagai objek transaksi baru ke array
+const form = document.getElementById('transactionForm');
+form.addEventListener('submit', (e) => {
+    
+
+    const transactionFormTitleInput = document.getElementById('transactionFormTitleInput').value;
+    const transactionFormAmountInput = Number(document.getElementById('transactionFormAmountInput').value);
+    const transactionFormDateInput = document.getElementById('transactionFormDateInput').value;
+    const transactionFormTypeSelect = document.getElementById('transactionFormTypeSelect').value;
+
+    transactions.push({
+        id: generateId(),
+        title: transactionFormTitleInput,
+        amount: Number(transactionFormAmountInput),
+        date: transactionFormDateInput,
+        type: transactionFormTypeSelect
+    });
+
+    render()
+
+    e.preventDefault();
+});
+
 
 /**
  * TODO [Skilled]:
@@ -41,7 +98,6 @@
  *  - Hitung total pemasukan, total pengeluaran, dan saldo (pemasukan - pengeluaran)
  *  - Tampilkan hasilnya ke elemen yang sesuai di HTML
  */
-
 
 /**
  * ========================================================
@@ -67,7 +123,6 @@
  *  - Kirim sinyal dengan document.dispatchEvent(new Event('transaction:updated')) setiap kali data berubah
  *  - Pasang satu listener untuk event tersebut yang memanggil fungsi render dan update dasbor
  */
-
 
 /**
  * ========================================================
